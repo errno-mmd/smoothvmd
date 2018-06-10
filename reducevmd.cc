@@ -41,7 +41,6 @@ vector<VMD_Frame> reduce_bone_frame(const vector<VMD_Frame>& v, int head, int ta
       v1.insert(v1.end(), v2.begin(), v2.end());
     } else {
       v1.push_back(v[head]);
-      v1.push_back(v[tail]);
     }
   }
   return v1;
@@ -68,7 +67,6 @@ vector<VMD_Morph> reduce_morph_frame(const vector<VMD_Morph>& v, int head, int t
     v1.insert(v1.end(), v2.begin(), v2.end());
   } else {
     v1.push_back(v[head]);
-    v1.push_back(v[tail]);
   }
   return v1;
 }

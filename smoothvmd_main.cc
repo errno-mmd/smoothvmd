@@ -37,8 +37,12 @@ bool smooth_and_reduce(VMD& vmd, float cutoff_freq, float threshold_pos, float t
   for (auto iter = frame_map.begin(); iter != frame_map.end(); iter++) {
     string name = iter->first;
     vector<VMD_Frame>& fv = iter->second;
-    smooth_bone_frame(fv, cutoff_freq);
-    fv = reduce_bone_frame(fv, 0, fv.size() - 1, threshold_pos, threshold_rot);
+    if (fv.size() > 0) {
+      smooth_bone_frame(fv, cutoff_freq);
+      VMD_Frame last_frame = fv.back();
+      fv = reduce_bone_frame(fv, 0, fv.size() - 1, threshold_pos, threshold_rot);
+      fv.push_back(last_frame);
+    }
   }
 
   // ボーンキーフレームを入れ替える
@@ -66,8 +70,12 @@ bool smooth_and_reduce(VMD& vmd, float cutoff_freq, float threshold_pos, float t
   for (auto iter = morph_map.begin(); iter != morph_map.end(); iter++) {
     string name = iter->first;
     vector<VMD_Morph>& mv = iter->second;
-    smooth_morph_frame(mv, cutoff_freq);
-    mv = reduce_morph_frame(mv, 0, mv.size() - 1, threshold_morph);
+    if (mv.size() > 0) {
+      smooth_morph_frame(mv, cutoff_freq);
+      VMD_Morph last_morph = mv.back();
+      mv = reduce_morph_frame(mv, 0, mv.size() - 1, threshold_morph);
+      mv.push_back(last_morph);
+    }
   }
 
   // 表情キーフレームを入れ替える
