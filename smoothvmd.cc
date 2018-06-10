@@ -77,35 +77,6 @@ void smooth_bone_frame(vector<VMD_Frame>& fv, float cutoff_freq)
   for (unsigned int i = 0; i < z.size(); i++) {
     fv[i].position.z() = z[i];
   }
-  /*
-  vector<float> rx;
-  for_each(fv.begin(), fv.end(), [&rx](VMD_Frame f) { rx.push_back(f.rotation.x()); });
-  lowpass_filter(rx, cutoff_freq);
-  for (unsigned int i = 0; i < rx.size(); i++) {
-    fv[i].rotation.x() = rx[i];
-  }
-  vector<float> ry;
-  for_each(fv.begin(), fv.end(), [&ry](VMD_Frame f) { ry.push_back(f.rotation.y()); });
-  lowpass_filter(ry, cutoff_freq);
-  for (unsigned int i = 0; i < ry.size(); i++) {
-    fv[i].rotation.y() = ry[i];
-  }
-  vector<float> rz;
-  for_each(fv.begin(), fv.end(), [&rz](VMD_Frame f) { rz.push_back(f.rotation.z()); });
-  lowpass_filter(rz, cutoff_freq);
-  for (unsigned int i = 0; i < rz.size(); i++) {
-    fv[i].rotation.z() = rz[i];
-  }
-  vector<float> rw;
-  for_each(fv.begin(), fv.end(), [&rw](VMD_Frame f) { rw.push_back(f.rotation.w()); });
-  lowpass_filter(rw, cutoff_freq);
-  for (unsigned int i = 0; i < rw.size(); i++) {
-    fv[i].rotation.w() = rw[i];
-  }
-  for (unsigned int i = 0; i < fv.size(); i++) {
-    fv[i].rotation.normalize();
-  }
-  */
 }
 
 void smooth_morph_frame(vector<VMD_Morph>& mv, float cutoff_freq)
