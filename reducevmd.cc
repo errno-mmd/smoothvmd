@@ -5,6 +5,9 @@
 #include "VMD.h"
 #include "reducevmd.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 vector<VMD_Frame> reduce_bone_frame(const vector<VMD_Frame>& v, int head, int tail, float threshold_pos, float threshold_rot)
 {
   float max_pos_err = 0.0;
