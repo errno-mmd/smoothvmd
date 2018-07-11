@@ -27,6 +27,9 @@ void interpolate_morph(vector<VMD_Morph>& fv)
 
 void lowpass_filter(vector<float>& v, float cutoff_freq)
 {
+  if (v.size() < 2) {
+    return;
+  }
   //  cout << "lowpass_filter" << endl;
   FFT<float> fft;
   vector<complex<float>> freqvec;
