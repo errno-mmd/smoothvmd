@@ -4,6 +4,9 @@
 #ifndef SMOOTHVMD_H
 #define SMOOTHVMD_H
 
+#include <vector>
+#include "VMD.h"
+
 void interpolate_frame(vector<VMD_Frame>& fv);
 void interpolate_morph(vector<VMD_Morph>& fv);
 void lowpass_filter(vector<float>& v, float cutoff_freq);
