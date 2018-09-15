@@ -1,8 +1,13 @@
-.backup/
-.memo/
-build/
-output/
-test_vmd/
+/.backup/
+/.memo/
+/.vs/
+/archive/
+/build/
+/Debug/
+/output/
+/Release/
+/test_vmd/
+/x64/
 
 *~
 TAGS
