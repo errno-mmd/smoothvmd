@@ -6,9 +6,6 @@ include_directories(${Boost_INCLUDE_DIRS}/boost)
 link_directories(${Boost_LIBRARY_DIRS})	
 
 find_package(ICU REQUIRED COMPONENTS i18n uc)
-# MESSAGE("ICU_INCLUDE_DIRS: ${ICU_INCLUDE_DIRS}")
-# MESSAGE("ICU_LIBRARIES: ${ICU_LIBRARIES}")
-# MESSAGE("ICU_LIBRARY_DIRS: ${ICU_LIBRARY_DIRS}")
 include_directories(${ICU_INCLUDE_DIRS})
 link_directories(${ICU_LIBRARY_DIRS})
 
