@@ -30,9 +30,7 @@ bool smooth_and_reduce(VMD& vmd, float cutoff_freq, float threshold_pos, float t
     vector<VMD_Frame>& fv = iter->second;
     if (fv.size() > 0) {
       smooth_bone_frame(fv, cutoff_freq);
-      VMD_Frame last_frame = fv.back();
       fv = reduce_bone_frame(fv, 0, fv.size() - 1, threshold_pos, threshold_rot);
-      fv.push_back(last_frame);
     }
   }
 
@@ -63,9 +61,7 @@ bool smooth_and_reduce(VMD& vmd, float cutoff_freq, float threshold_pos, float t
     vector<VMD_Morph>& mv = iter->second;
     if (mv.size() > 0) {
       smooth_morph_frame(mv, cutoff_freq);
-      VMD_Morph last_morph = mv.back();
       mv = reduce_morph_frame(mv, 0, mv.size() - 1, threshold_morph);
-      mv.push_back(last_morph);
     }
   }
 
