@@ -14,7 +14,7 @@ void optimize_bezier_parameter(VMD_Frame& head_frame, const vector<VMD_Frame>& v
   // 未実装
 }
 
-// head_frameとtail_frameを元に、補間でframe_num番目のフレームを作る
+// head_frameとtail_frameを元に、補間でframe_num番目のボーンフレームを作る
 VMD_Frame interpolate_frame(const VMD_Frame& head_frame, const VMD_Frame& tail_frame, int frame_num, bool bezier)
 {
   VMD_Frame f;
@@ -31,6 +31,16 @@ VMD_Frame interpolate_frame(const VMD_Frame& head_frame, const VMD_Frame& tail_f
     f.rotation = head_frame.rotation.slerp(ratio, tail_frame.rotation);
   }
   return f;
+}
+
+// head_frameとtail_frameを元に、補間でframe_num番目の表情フレームを作る
+VMD_Morph interpolate_morph(const VMD_Morph& head_frame, const VMD_Morph& tail_frame, int frame_num)
+{
+  VMD_Morph m;
+  int total = tail_frame.frame - head_frame.frame;
+  float ratio = float(frame_num - head_frame.frame) / total;
+  m.weight = head_frame.weight + (tail_frame.weight - head_frame.weight) * ratio;
+  return m;
 }
 
 // head番目からtail番目のボーンキーフレームのうち、残すべきものを再帰的に探して返す。
@@ -55,8 +65,7 @@ vector<VMD_Frame> reduce_bone_frame_recursive(const vector<VMD_Frame>& v, int he
       max_idx_pos = i;
       max_pos_err = pos_err;
     }
-    Quaternionf q_err = f.rotation * v[i].rotation.inverse();
-    float rot_err = acos(q_err.w()) * 2 * 180 / M_PI; // 角度を取得。単位はdegree
+    float rot_err = fabs(f.rotation.angularDistance(v[i].rotation) * 180 / M_PI);
     if (rot_err > max_rot_err) {
       max_idx_rot = i;
       max_rot_err = rot_err;
