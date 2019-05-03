@@ -94,6 +94,11 @@ vector<VMD_Frame> reduce_bone_frame_recursive(const vector<VMD_Frame>& v, int he
 // head番目からtail番目のボーンキーフレームのうち、残すべきものを探して返す。
 vector<VMD_Frame> reduce_bone_frame(const vector<VMD_Frame>& v, int head, int tail, float threshold_pos, float threshold_rot, bool bezier)
 {
+  if (threshold_pos < 0 || threshold_rot < 0) {
+    vector<VMD_Frame> v1(v);
+    return v1;
+  }
+
   vector<VMD_Frame> v1 = reduce_bone_frame_recursive(v, head, tail, threshold_pos, threshold_rot, bezier);
   v1.push_back(v.back());
   return v1;
@@ -129,6 +134,11 @@ vector<VMD_Morph> reduce_morph_frame_recursive(const vector<VMD_Morph>& v, int h
 // head番目からtail番目の表情キーフレームのうち、残すべきものを探して返す。
 vector<VMD_Morph> reduce_morph_frame(const vector<VMD_Morph>& v, int head, int tail, float threshold)
 {
+  if (threshold < 0) {
+    vector<VMD_Morph> v1(v);
+    return v1;
+  }
+
   vector<VMD_Morph> v1 = reduce_morph_frame_recursive(v, head, tail, threshold);
   v1.push_back(v.back());
   return v1;

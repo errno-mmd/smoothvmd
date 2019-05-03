@@ -88,6 +88,10 @@ void lowpass_filter(vector<float>& v, float cutoff_freq)
 // 引数fvには同一ボーンのキーフレームがフレーム番号順に格納されているものとする
 void smooth_bone_frame(vector<VMD_Frame>& fv, float cutoff_freq)
 {
+  if (cutoff_freq < 0) {
+    return;
+  }
+  
   sort(fv.begin(), fv.end());
   fv = fill_bone_frame(fv); // キーフレームの隙間をなくす
   // ローパスフィルタにかける
@@ -157,6 +161,10 @@ void smooth_bone_frame(vector<VMD_Frame>& fv, float cutoff_freq)
 // 引数mvには同一モーフのキーフレームがフレーム番号順に格納されているものとする
 void smooth_morph_frame(vector<VMD_Morph>& mv, float cutoff_freq)
 {
+  if (cutoff_freq < 0) {
+    return;
+  }
+    
   sort(mv.begin(), mv.end());
   mv = fill_morph_frame(mv); // キーフレームの隙間をなくす
   // ローパスフィルタにかける
