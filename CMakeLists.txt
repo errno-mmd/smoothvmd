@@ -14,9 +14,11 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(Eigen3 eigen3 REQUIRED)
 include_directories(${Eigen3_INCLUDE_DIRS})
 
-add_executable(smoothvmd smoothvmd_main.cc smooth_reduce.cc smoothvmd.cc reducevmd.cc MMDFileIOUtil.cc VMD.cc)
+add_executable(smoothvmd smoothvmd_main.cc smooth_reduce.cc smoothvmd.cc reducevmd.cc MMDFileIOUtil.cc VMD.cc interpolate.cc)
 target_link_libraries(smoothvmd ${Boost_LIBRARIES})
 target_link_libraries(smoothvmd ${ICU_LIBRARIES})
 
 set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11")
 
+enable_testing()
+add_subdirectory(UnitTest)

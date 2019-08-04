@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     ("th_pos", opt::value<float>(), "threshold(position) for keyframe reduction")
     ("th_rot", opt::value<float>(), "threshold(rotation) for keyframe reduction [degree]")
     ("th_morph", opt::value<float>(), "threshold(morph) for keyframe reduction")
+    ("bezier", opt::bool_switch()->default_value(false), "bezier curve interpolation")
     ;
 
   opt::options_description hidden("hidden options");
@@ -42,7 +43,8 @@ int main(int argc, char *argv[])
   float cutoff_freq = 5.0; // [Hz]
   float threshold_pos = 0.5;
   float threshold_rot = 3.0; // [degree]
-  float threshold_morph = 0.1; // 0～1
+  float threshold_morph = 0.1; // 0-1
+  bool bezier = false;
 
   try {
     p.add("input-file", 1);
@@ -67,6 +69,9 @@ int main(int argc, char *argv[])
     if (vm.count("th_morph")) {
       threshold_morph = vm["th_morph"].as<float>();
     }
+    if (vm.count("bezier")) {
+      bezier = vm["bezier"].as<bool>();
+    }
     fname_in = vm["input-file"].as<string>();
     fname_out = vm["output-file"].as<string>();
   } catch (exception& e) {
@@ -86,7 +91,7 @@ int main(int argc, char *argv[])
   in.close();
 
   bool success;
-  success = smooth_and_reduce(v, cutoff_freq, threshold_pos, threshold_rot, threshold_morph);
+  success = smooth_and_reduce(v, cutoff_freq, threshold_pos, threshold_rot, threshold_morph, bezier);
   if (! success) {
     return 1;
   }

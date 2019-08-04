@@ -14,7 +14,7 @@ using namespace MMDFileIOUtil;
 using namespace std;
 
 // VMDモーションの平滑化および間引きを行う
-bool smooth_and_reduce(VMD& vmd, float cutoff_freq, float threshold_pos, float threshold_rot, float threshold_morph)
+bool smooth_and_reduce(VMD& vmd, float cutoff_freq, float threshold_pos, float threshold_rot, float threshold_morph, bool bezier)
 {
   cout << "vmd.frame.size(original): " << vmd.frame.size() << endl;
   // キーフレームをボーンごとに分ける
@@ -30,8 +30,8 @@ bool smooth_and_reduce(VMD& vmd, float cutoff_freq, float threshold_pos, float t
   for (auto iter = frame_map.begin(); iter != frame_map.end(); iter++) {
     vector<VMD_Frame>& fv = iter->second;
     if (fv.size() > 2) {
-      smooth_bone_frame(fv, cutoff_freq);
-      fv = reduce_bone_frame(fv, 0, fv.size() - 1, threshold_pos, threshold_rot);
+      smooth_bone_frame(fv, cutoff_freq, bezier);
+      fv = reduce_bone_frame(fv, 0, fv.size() - 1, threshold_pos, threshold_rot, bezier);
     }
     for (unsigned int i = 0; i < fv.size(); i++) {
       vmd.frame.push_back(fv[i]);
