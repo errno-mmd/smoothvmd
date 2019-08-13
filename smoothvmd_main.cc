@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
     ("th_pos", opt::value<float>(), "threshold(position) for keyframe reduction")
     ("th_rot", opt::value<float>(), "threshold(rotation) for keyframe reduction [degree]")
     ("th_morph", opt::value<float>(), "threshold(morph) for keyframe reduction")
+    ("fps_in", opt::value<float>(), "frame rate of input-file")
+    ("fps_out", opt::value<float>(), "frame rate of input-file")
     ("bezier", opt::bool_switch()->default_value(false), "bezier curve interpolation")
     ;
 
@@ -44,6 +46,8 @@ int main(int argc, char *argv[])
   float threshold_pos = 0.5;
   float threshold_rot = 3.0; // [degree]
   float threshold_morph = 0.1; // 0-1
+  float fps_in = 30.0;
+  float fps_out = 30.0;
   bool bezier = false;
 
   try {
@@ -69,6 +73,12 @@ int main(int argc, char *argv[])
     if (vm.count("th_morph")) {
       threshold_morph = vm["th_morph"].as<float>();
     }
+    if (vm.count("fps_in")) {
+      fps_in = vm["fps_in"].as<float>();
+    }
+    if (vm.count("fps_out")) {
+      fps_out = vm["fps_out"].as<float>();
+    }
     if (vm.count("bezier")) {
       bezier = vm["bezier"].as<bool>();
     }
@@ -84,6 +94,8 @@ int main(int argc, char *argv[])
   cout << "threshold(position): " << threshold_pos << endl;
   cout << "threshold(rotation): " << threshold_rot << endl;
   cout << "threshold(morph): " << threshold_morph << endl;
+  cout << "fps_in: " << fps_in << endl;
+  cout << "fps_out: " << fps_out << endl;
   
   ifstream in(fname_in, ios::binary);
   VMD v;
@@ -91,7 +103,8 @@ int main(int argc, char *argv[])
   in.close();
 
   bool success;
-  success = smooth_and_reduce(v, cutoff_freq, threshold_pos, threshold_rot, threshold_morph, bezier);
+  success = smooth_and_reduce(v, cutoff_freq, threshold_pos, threshold_rot, threshold_morph,
+                              fps_in, fps_out, bezier);
   if (! success) {
     return 1;
   }

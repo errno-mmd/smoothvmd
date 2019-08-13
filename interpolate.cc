@@ -46,14 +46,10 @@ float bezier_y_vmd(uint8_t ipx1, uint8_t ipy1, uint8_t ipx2, uint8_t ipy2, float
   return bezier_y(Vector2f(float(ipx1)/127, float(ipy1)/127), Vector2f(float(ipx2)/127, float(ipy2)/127), x);
 }
 
-// head_frameとtail_frameを元に、補間でframe_num番目のボーンフレームを作る
-VMD_Frame interpolate_frame(const VMD_Frame& head_frame, const VMD_Frame& tail_frame, int frame_num, bool bezier)
+VMD_Frame make_intermediate_frame(const VMD_Frame& head_frame, const VMD_Frame& tail_frame, float ratio, bool bezier)
 {
   VMD_Frame f;
   memcpy(f.bonename, head_frame.bonename, f.bonename_len);
-  f.number = frame_num;
-  int total = tail_frame.number - head_frame.number;
-  float ratio = float(frame_num - head_frame.number) / total;
   if (bezier) {
     // ベジェ曲線補間
     const uint8_t* ip = tail_frame.interpolation;
@@ -82,14 +78,30 @@ VMD_Frame interpolate_frame(const VMD_Frame& head_frame, const VMD_Frame& tail_f
   return f;
 }
 
+// head_frameとtail_frameを元に、補間でframe_num番目のボーンフレームを作る
+VMD_Frame interpolate_frame(const VMD_Frame& head_frame, const VMD_Frame& tail_frame, int frame_num, bool bezier)
+{
+  int total = tail_frame.number - head_frame.number;
+  float ratio = float(frame_num - head_frame.number) / total;
+  VMD_Frame f = make_intermediate_frame(head_frame, tail_frame, ratio, bezier);
+  f.number = frame_num;
+  return f;
+}
+
+VMD_Morph make_intermediate_morph(const VMD_Morph& head_frame, const VMD_Morph& tail_frame, float ratio)
+{
+  VMD_Morph m = head_frame;
+  m.weight = head_frame.weight + (tail_frame.weight - head_frame.weight) * ratio;
+  return m;
+}
+
 // head_frameとtail_frameを元に、補間でframe_num番目の表情フレームを作る
 VMD_Morph interpolate_morph(const VMD_Morph& head_frame, const VMD_Morph& tail_frame, int frame_num)
 {
-  VMD_Morph m = head_frame;
-  m.frame = frame_num;
   int total = tail_frame.frame - head_frame.frame;
   float ratio = float(frame_num - head_frame.frame) / total;
-  m.weight = head_frame.weight + (tail_frame.weight - head_frame.weight) * ratio;
+  VMD_Morph m = make_intermediate_morph(head_frame, tail_frame, ratio);
+  m.frame = frame_num;
   return m;
 }
 

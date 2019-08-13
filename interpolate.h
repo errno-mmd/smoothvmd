@@ -24,8 +24,14 @@ float bezier_findt(Vector2f p1, Vector2f p2, float x_arg);
 // x座標値がx_argとなる点をベジェ曲線上から探し、その点のy座標値を返す
 float bezier_y(Vector2f p1, Vector2f p2, float x_arg);
 
+// head_frameとtail_frameを元に、中間のボーンフレームを作る
+VMD_Frame make_intermediate_frame(const VMD_Frame& head_frame, const VMD_Frame& tail_frame, float ratio, bool bezier);
+
 // head_frameとtail_frameを元に、補間でframe_num番目のボーンフレームを作る
 VMD_Frame interpolate_frame(const VMD_Frame& head_frame, const VMD_Frame& tail_frame, int frame_num, bool bezier);
+
+// head_frameとtail_frameを元に、中間の表情フレームを作る
+VMD_Morph make_intermediate_morph(const VMD_Morph& head_frame, const VMD_Morph& tail_frame, float ratio);
 
 // head_frameとtail_frameを元に、補間でframe_num番目の表情フレームを作る
 VMD_Morph interpolate_morph(const VMD_Morph& head_frame, const VMD_Morph& tail_frame, int frame_num);

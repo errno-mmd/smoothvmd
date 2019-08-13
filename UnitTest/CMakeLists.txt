@@ -17,5 +17,9 @@ add_executable(InterpolationTest InterpolationTest.cc ../interpolate.cc ../MMDFi
 target_link_libraries(InterpolationTest gtest gtest_main pthread ${ICU_LIBRARIES})
 add_test(NAME InterpolationTest COMMAND InterpolationTest)
 
+add_executable(FpsChangerTest FpsChangerTest.cc ../fpschanger.cc ../interpolate.cc ../MMDFileIOUtil.cc ../VMD.cc)
+target_link_libraries(FpsChangerTest gtest gtest_main pthread ${ICU_LIBRARIES})
+add_test(NAME FpsChangerTest COMMAND FpsChangerTest)
+
 set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11")
 
