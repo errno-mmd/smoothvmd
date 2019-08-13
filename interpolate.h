@@ -9,7 +9,11 @@
 using namespace Eigen;
 
 // 制御点(0,0), p1, p2, (1,1)の3次ベジェ曲線上の、パラメータtに対応する点を返す
-Vector2f bezier3(Vector2f p1, Vector2f p2, float t);
+inline float bezier3(float p1, float p2, float t)
+{
+  float s = 1 - t;
+  return (3 * s * s * p1 + 3 * s * t * p2 + t * t) * t;
+}
 
 // 3次方程式 a*x^3 + b*x^2 + c*x + d = 0 の解を求める
 Vector3cd solve_cubic_equation(double a, double b, double c, double d);

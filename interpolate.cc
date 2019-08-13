@@ -1,4 +1,5 @@
 // VMDモーションの補間を行う
+#include "interpolate.h"
 
 #include <Eigen/Core>
 #include <unsupported/Eigen/NonLinearOptimization>
@@ -6,15 +7,6 @@
 #include "VMD.h"
 
 using namespace Eigen;
-
-// 制御点(0,0), p1, p2, (1,1)の3次ベジェ曲線上の、パラメータtに対応する点を返す
-Vector2f bezier3(Vector2f p1, Vector2f p2, float t)
-{
-  return (1 - t) * (1 - t) * (1 - t) * Vector2f(0, 0)
-    + 3 * (1 - t) * (1 - t) * t * p1
-    + 3 * (1 - t) * t * t * p2
-    + t * t * t * Vector2f(1, 1);
-}
 
 // x座標値がx_argとなる点をベジェ曲線上から探し、その点のy座標値を返す
 // ベジェ曲線の制御点は(0,0), p1, p2, (1,1)とする
@@ -26,16 +18,18 @@ float bezier_y(Vector2f p1, Vector2f p2, float x_arg)
   float lower = 0.0;
   float upper = 1.0;
   float t;
-  Vector2f p;
+  float x;
+  float x1 = p1.x();
+  float x2 = p2.x();
   const int max_iteration = 20;
   for (int i = 0; i < max_iteration; i++) {
     t = (lower + upper) / 2;
-    p = bezier3(p1, p2, t);
-    if (abs(p.x() - x_arg) < epsilon) {
+    x = bezier3(x1, x2, t);
+    if (abs(x - x_arg) < epsilon) {
       // x == x_arg となる t が見つかった
       break;
     }
-    if (p.x() < x_arg) {
+    if (x < x_arg) {
       // x(t)は単調増加するので、
       // 真のxがもっと大きいということは、真のtはもっと大きいので、
       // 探索範囲を上半分に絞る
@@ -44,7 +38,7 @@ float bezier_y(Vector2f p1, Vector2f p2, float x_arg)
       upper = t;
     }
   }
-  return p.y();
+  return bezier3(p1.y(), p2.y(), t);
 }
 
 float bezier_y_vmd(uint8_t ipx1, uint8_t ipy1, uint8_t ipx2, uint8_t ipy2, float x)
