@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="interpolate.cc" />
     <ClCompile Include="MMDFileIOUtil.cc" />
     <ClCompile Include="reducevmd.cc" />
     <ClCompile Include="smoothvmd.cc" />
@@ -134,6 +135,7 @@
     <ClCompile Include="VMD.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="interpolate.h" />
     <ClInclude Include="MMDFileIOUtil.h" />
     <ClInclude Include="reducevmd.h" />
     <ClInclude Include="smoothvmd.h" />

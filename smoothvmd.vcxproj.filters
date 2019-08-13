@@ -33,6 +33,9 @@
     <ClCompile Include="smooth_reduce.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="interpolate.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MMDFileIOUtil.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VMD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interpolate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
