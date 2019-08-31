@@ -36,6 +36,9 @@
     <ClCompile Include="interpolate.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fpschanger.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MMDFileIOUtil.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="interpolate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fpschanger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

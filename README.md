@@ -40,8 +40,8 @@ options:
   --th_pos arg          threshold(position) for keyframe reduction
   --th_rot arg          threshold(rotation) for keyframe reduction [degree]
   --th_morph arg        threshold(morph) for keyframe reduction
-  --fps_in arg          frame rate of input-file
-  --fps_out arg         frame rate of input-file
+  --fps_in arg          frame rate of input motion file
+  --fps_out arg         frame rate of output motion file
   --bezier              bezier curve interpolation
 ```
 上記コマンドを実行すると、smoothvmd は input.vmd を読み込んでモーションの平滑化と間引きを行い、
